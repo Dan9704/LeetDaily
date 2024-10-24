@@ -5,7 +5,8 @@ Welcome to the **LeetDaily** series! Every day, I solve a new coding problem fro
 ## 📌 Challenge List:
 
 1. **Day 1: Roman to Integer**
-   - [Solution](./solutions/day1_roman_to_integer.py)
+   - [Solution](./solutions/day1_1_Two_Sum.cpp)
+  
 
 
 
