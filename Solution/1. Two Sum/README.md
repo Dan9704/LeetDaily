@@ -1,13 +1,9 @@
-# LeetDaily Challenges
+# LeetDaily Challenge: Two Sum
 
-Welcome to the **LeetDaily** series! Every day, I solve a new coding problem from LeetCode and share the solution. In this repository, you’ll find the CPP code for each problem, along with a brief explanation.
+**LeetCode Problem #1**  
+**Difficulty**: Easy
 
-## 📌 Challenge List:
+## Problem:
+Given an array `nums` and an integer `target`, return the indices of two numbers that add up to the target.
 
-1. **Day 1: Roman to Integer**
-   - [Solution](./solutions/day1_1_Two_Sum.cpp)
-  
-
-
-
-
+**Example:**
