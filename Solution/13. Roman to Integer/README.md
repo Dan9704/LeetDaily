@@ -1,66 +1,52 @@
-# LeetDaily Challenge: Two Sum
+# LeetDaily Challenge: Roman to Integer
 
-**LeetCode Problem #1**  
+**LeetCode Problem #13**  
 **Difficulty**: Easy
 
-**Link to the Problem**: [LeetCode - Two Sum](https://leetcode.com/problems/two-sum/description/)
+**Link to the Problem**: [LeetCode - Roman to Integer](https://leetcode.com/problems/roman-to-integer/)
 
 ---
 
 ### Scenario:
-The **Two Sum Problem** asks us to find two numbers in an array that sum up to a given target. We need to return the indices of these two numbers. The problem ensures that there is exactly one solution, and the same element cannot be used twice.
+The **Roman to Integer Problem** requires us to convert a Roman numeral string to an integer. Roman numerals are represented by the symbols I, V, X, L, C, D, and M, each with a specific integer value. Some numerals are subtracted rather than added when a smaller numeral appears before a larger one.
 
 ---
 
 ### Approach:
 
-1. **Brute Force**:  
-   - The simplest approach where we check every pair of numbers to see if they add up to the target.  
-   - **Time Complexity**: O(n²), where `n` is the length of the array.
+1. **Mapping Roman Symbols to Values**:  
+   - We store each Roman symbol’s integer value in a hash map for easy lookup.
 
-2. **Hash Map**:  
-   - We can use a hash map (dictionary) to store each number and its index as we iterate through the array. For each number, we check if its complement (target - current number) exists in the hash map.  
-   - **Time Complexity**: O(n) for a single pass through the array, where `n` is the length of the array.
-   - **Space Complexity**: O(n) for storing the hash map.
+2. **Iteration with Conditional Addition/Subtraction**:
+   - For each character in the string, check if its value is less than the value of the next character:
+     - If yes, subtract it (indicating it should be subtracted from the total).
+     - If not, add it to the total.
 
 ---
 
-### Code:
+### Code (C++):
 
-#### Solution 1: Brute Force
 ```cpp
-#include <vector>
+#include <unordered_map>
+#include <string>
 
-std::vector<int> twoSum(std::vector<int>& nums, int target) {
-    for (int i = 0; i < nums.size(); ++i) {
-        for (int j = i + 1; j < nums.size(); ++j) {
-            if (nums[i] + nums[j] == target) {
-                return {i, j};
-            }
-        }
-    }
-    return {};
-}
-```
-
-#### Solution 2: Hash Map
-```cpp
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int, int> map;
-        int n = nums.size();
+    int romanToInt(std::string s) {
+        std::unordered_map<char, int> roman = {
+            {'I', 1}, {'V', 5}, {'X', 10}, {'L', 50},
+            {'C', 100}, {'D', 500}, {'M', 1000}
+        };
 
-        // Find the complement
-        for (int i = 0; i < n; i++) {
-            int remain = target - nums[i];
-            if (map.find(remain) != map.end()) {
-                return {map[remain], i};
+        int ans = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (roman[s[i]] < roman[s[i + 1]]) {
+                ans -= roman[s[i]];
             } else {
-                map[nums[i] = i;
+                ans += roman[s[i]];
             }
         }
-        return {}; // No solution found
+        return ans;
     }
 };
 ```
@@ -69,8 +55,12 @@ public:
 
 ### Explanation:
 
-- **Brute Force**: We loop through every possible pair and return the indices when we find a pair that adds up to the target.
-- **Hash Map**: We store each number’s index in a hash map, and for each number, we check if the difference between the target and the current number exists in the map.
+- **Mapping**: Each Roman numeral is mapped to its integer value in an unordered map for quick access.
+- **Iteration**: Loop through each character in the string `s`.
+  - If the current numeral is less than the next numeral, subtract it (e.g., IV is 4 because I < V).
+  - Otherwise, add it to the total.
+  
+This approach handles both cases (addition and subtraction) in a single loop.
 
 ---
 
