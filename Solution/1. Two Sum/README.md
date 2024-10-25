@@ -28,7 +28,7 @@ The **Two Sum Problem** asks us to find two numbers in an array that sum up to a
 ### Code:
 
 #### Solution 1: Brute Force
-```python
+```cpp
 #include <vector>
 
 std::vector<int> twoSum(std::vector<int>& nums, int target) {
@@ -44,21 +44,25 @@ std::vector<int> twoSum(std::vector<int>& nums, int target) {
 ```
 
 #### Solution 2: Hash Map
-```python
-#include <unordered_map>
-#include <vector>
+```cpp
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int, int> map;
+        int n = nums.size();
 
-std::vector<int> twoSum(std::vector<int>& nums, int target) {
-    std::unordered_map<int, int> hash_map;
-    for (int i = 0; i < nums.size(); ++i) {
-        int complement = target - nums[i];
-        if (hash_map.find(complement) != hash_map.end()) {
-            return {hash_map[complement], i};
+        // Find the complement
+        for (int i = 0; i < n; i++) {
+            int remain = target - nums[i];
+            if (map.find(remain) != map.end()) {
+                return {map[remain], i};
+            } else {
+                map[nums[i] = i;
+            }
         }
-        hash_map[nums[i]] = i;
+        return {}; // No solution found
     }
-    return {};
-}
+};
 ```
 
 ---
