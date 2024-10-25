@@ -13,6 +13,9 @@ Welcome to the **LeetDaily** series! Every day, I solve a new coding problem fro
 3. **Day 3: 13. Roman to Integer**
   - [Solution](Solution/1.%20Two%20Sum)
 
+4. **Day 4: 14. Longest Common Prefix**
+  - [Solution](Solution/1.%20Two%20Sum)
+
 
 
 
