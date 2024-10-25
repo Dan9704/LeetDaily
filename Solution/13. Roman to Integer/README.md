@@ -64,6 +64,20 @@ This approach handles both cases (addition and subtraction) in a single loop.
 
 ---
 
+### Complexity Analysis:
+
+- **Time Complexity**: O(n), where `n` is the length of the string `s`.
+  - We only need a single pass through the string, performing constant-time operations (checking the map and adding/subtracting values).
+  
+- **Space Complexity**: O(1)
+  - We use a fixed-size hash map with seven entries (one for each Roman numeral), making the space complexity constant. The input string does not consume any extra space in terms of storage for the computation.
+
+---
+
 ### Follow for More:
 - Watch the full explanation on TikTok: [Link to TikTok Video](#)
 - Follow me for daily coding challenges and solutions! 🚀
+
+
+
+
