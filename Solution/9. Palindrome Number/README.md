@@ -1,66 +1,56 @@
-# LeetDaily Challenge: Two Sum
+# LeetDaily Challenge: Palindrome Number
 
-**LeetCode Problem #1**  
+**LeetCode Problem #9**  
 **Difficulty**: Easy
 
-**Link to the Problem**: [LeetCode - Two Sum](https://leetcode.com/problems/two-sum/description/)
+**Link to the Problem**: [LeetCode - Palindrome Number](https://leetcode.com/problems/palindrome-number/)
 
 ---
 
 ### Scenario:
-The **Two Sum Problem** asks us to find two numbers in an array that sum up to a given target. We need to return the indices of these two numbers. The problem ensures that there is exactly one solution, and the same element cannot be used twice.
+The **Palindrome Number Problem** requires us to determine if a given integer `x` is a palindrome. A palindrome number reads the same backward as forward. Negative numbers are not considered palindromic.
 
 ---
 
 ### Approach:
 
-1. **Brute Force**:  
-   - The simplest approach where we check every pair of numbers to see if they add up to the target.  
-   - **Time Complexity**: O(n²), where `n` is the length of the array.
+1. **Initial Check**:
+   - If the number `x` is negative, return `false` because negative numbers cannot be palindromic.
 
-2. **Hash Map**:  
-   - We can use a hash map (dictionary) to store each number and its index as we iterate through the array. For each number, we check if its complement (target - current number) exists in the hash map.  
-   - **Time Complexity**: O(n) for a single pass through the array, where `n` is the length of the array.
-   - **Space Complexity**: O(n) for storing the hash map.
+2. **Digit Comparison**:
+   - Calculate the largest power of 10 divisor (`div`) to extract the most significant digit.
+   - Use two pointers-like approach: check the leftmost and rightmost digits. If they don’t match, return `false`.
+   - Continue reducing the number by removing the checked digits from both ends, adjusting `div` accordingly.
 
 ---
 
-### Code:
+### Code (C++):
 
-#### Solution 1: Brute Force
-```cpp
-#include <vector>
-
-std::vector<int> twoSum(std::vector<int>& nums, int target) {
-    for (int i = 0; i < nums.size(); ++i) {
-        for (int j = i + 1; j < nums.size(); ++j) {
-            if (nums[i] + nums[j] == target) {
-                return {i, j};
-            }
-        }
-    }
-    return {};
-}
-```
-
-#### Solution 2: Hash Map
 ```cpp
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int, int> map;
-        int n = nums.size();
-
-        // Find the complement
-        for (int i = 0; i < n; i++) {
-            int remain = target - nums[i];
-            if (map.find(remain) != map.end()) {
-                return {map[remain], i};
-            } else {
-                map[nums[i] = i;
-            }
+    bool isPalindrome(int x) {
+        if (x < 0) {
+            return false;
         }
-        return {}; // No solution found
+        
+        long long div = 1;  
+        while (x >= 10 * div) {
+            div *= 10;
+        }
+
+        while (x) {
+            int right = x % 10;
+            int left = x / div;
+
+            if (left != right) {
+                return false;
+            }
+
+            x = (x % div) / 10;
+            div /= 100;
+        }
+        return true;
     }
 };
 ```
@@ -69,8 +59,19 @@ public:
 
 ### Explanation:
 
-- **Brute Force**: We loop through every possible pair and return the indices when we find a pair that adds up to the target.
-- **Hash Map**: We store each number’s index in a hash map, and for each number, we check if the difference between the target and the current number exists in the map.
+- **Divisor Calculation**: We calculate `div` to identify the most significant digit by increasing `div` until it’s greater than or equal to `x`.
+- **Digit Matching**: We compare the leftmost and rightmost digits. If they are not the same, the number isn’t a palindrome.
+- **Reduce Number**: After comparing, we remove the leftmost and rightmost digits and adjust `div` by dividing it by 100, effectively moving toward the center of the number.
+
+---
+
+### Complexity Analysis:
+
+- **Time Complexity**: O(log₁₀(n)), where `n` is the input number.
+  - We reduce the number of digits to check by two on each iteration, making the complexity logarithmic in the number of digits.
+
+- **Space Complexity**: O(1)
+  - Only a constant amount of space is used for variables, making the space complexity constant.
 
 ---
 
