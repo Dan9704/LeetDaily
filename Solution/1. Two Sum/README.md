@@ -73,7 +73,3 @@ std::vector<int> twoSum(std::vector<int>& nums, int target) {
 ### Follow for More:
 - Watch the full explanation on TikTok: [Link to TikTok Video](#)
 - Follow me for daily coding challenges and solutions! 🚀
-
----
-
-This version provides a clear breakdown of the problem, solutions, and the approach with both brute force and hash map methods. Let me know if you need further adjustments!
