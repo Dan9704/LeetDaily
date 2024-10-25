@@ -5,7 +5,7 @@ Welcome to the **LeetDaily** series! Every day, I solve a new coding problem fro
 ## 📌 Challenge List:
 
 1. **Day 1: 1. Two Sum**
-   - [Solution](./solutions/day1_1_Two_Sum.cpp)
+   - [Solution](./solutions/1.\TwoSum)
   
 
 
