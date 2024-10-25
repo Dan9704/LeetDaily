@@ -1,66 +1,54 @@
-# LeetDaily Challenge: Two Sum
+# LeetDaily Challenge: Longest Common Prefix
 
-**LeetCode Problem #1**  
+**LeetCode Problem #14**  
 **Difficulty**: Easy
 
-**Link to the Problem**: [LeetCode - Two Sum](https://leetcode.com/problems/two-sum/description/)
+**Link to the Problem**: [LeetCode - Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/)
 
 ---
 
 ### Scenario:
-The **Two Sum Problem** asks us to find two numbers in an array that sum up to a given target. We need to return the indices of these two numbers. The problem ensures that there is exactly one solution, and the same element cannot be used twice.
+The **Longest Common Prefix Problem** requires us to find the longest common prefix string among an array of strings. If there is no common prefix, we should return an empty string.
 
 ---
 
 ### Approach:
 
-1. **Brute Force**:  
-   - The simplest approach where we check every pair of numbers to see if they add up to the target.  
-   - **Time Complexity**: O(n²), where `n` is the length of the array.
+1. **Initial Check**:
+   - If the input array `strs` is empty, immediately return an empty string as there are no strings to compare.
 
-2. **Hash Map**:  
-   - We can use a hash map (dictionary) to store each number and its index as we iterate through the array. For each number, we check if its complement (target - current number) exists in the hash map.  
-   - **Time Complexity**: O(n) for a single pass through the array, where `n` is the length of the array.
-   - **Space Complexity**: O(n) for storing the hash map.
+2. **Prefix Character-by-Character**:
+   - Start with the first string in the array as a reference.
+   - For each character in the first string, check if it is common across all strings at that position:
+     - If any string runs out of characters or has a different character at that position, stop and return the current result.
+     - Otherwise, append the character to the result and continue.
 
 ---
 
-### Code:
+### Code (C++):
 
-#### Solution 1: Brute Force
 ```cpp
 #include <vector>
+#include <string>
 
-std::vector<int> twoSum(std::vector<int>& nums, int target) {
-    for (int i = 0; i < nums.size(); ++i) {
-        for (int j = i + 1; j < nums.size(); ++j) {
-            if (nums[i] + nums[j] == target) {
-                return {i, j};
-            }
-        }
-    }
-    return {};
-}
-```
-
-#### Solution 2: Hash Map
-```cpp
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int, int> map;
-        int n = nums.size();
-
-        // Find the complement
-        for (int i = 0; i < n; i++) {
-            int remain = target - nums[i];
-            if (map.find(remain) != map.end()) {
-                return {map[remain], i};
-            } else {
-                map[nums[i] = i;
-            }
+    std::string longestCommonPrefix(std::vector<std::string>& strs) {
+        if (strs.empty()) {
+            return "";  // Return empty string if no strings are provided
         }
-        return {}; // No solution found
+        
+        std::string res = "";
+        for (int i = 0; i < strs[0].size(); i++) {
+            for (std::string s : strs) {
+                if (i == s.size() || s[i] != strs[0][i]) {
+                    return res;
+                }
+            }
+            res += strs[0][i];
+        }
+        
+        return res;
     }
 };
 ```
@@ -69,8 +57,19 @@ public:
 
 ### Explanation:
 
-- **Brute Force**: We loop through every possible pair and return the indices when we find a pair that adds up to the target.
-- **Hash Map**: We store each number’s index in a hash map, and for each number, we check if the difference between the target and the current number exists in the map.
+- **Character-by-Character Comparison**: Start with the first string as a baseline. For each character position, check if every string matches this character:
+  - If all strings have the character at that position, add it to the result.
+  - If any string does not have the character at that position, or the characters do not match, stop and return the current result.
+
+---
+
+### Complexity Analysis:
+
+- **Time Complexity**: O(S), where `S` is the sum of all characters in all strings.
+  - In the worst case, all strings are the same, and we check every character of each string.
+
+- **Space Complexity**: O(1)
+  - Only a constant amount of extra space is used for the result string (excluding input storage).
 
 ---
 
