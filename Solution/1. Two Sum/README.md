@@ -1,7 +1,3 @@
-Here's the completed version of your README file for the **LeetDaily Challenge: Two Sum**:
-
----
-
 # LeetDaily Challenge: Two Sum
 
 **LeetCode Problem #1**  
