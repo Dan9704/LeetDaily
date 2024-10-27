@@ -16,6 +16,9 @@ Welcome to the **LeetDaily** series! Every day, I solve a new coding problem fro
 4. **Day 4: 14. Longest Common Prefix**
   - [Solution](Solution/1.%20Two%20Sum)
 
+5. **Day 5: 20. Valid Parentheses**
+  - [Solution](Solution/1.%20Two%20Sum)
+
 
 
 
