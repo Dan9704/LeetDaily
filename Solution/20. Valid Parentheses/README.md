@@ -1,54 +1,62 @@
-# LeetDaily Challenge: Longest Common Prefix
+# LeetDaily Challenge: Valid Parentheses
 
-**LeetCode Problem #14**  
+**LeetCode Problem #20**  
 **Difficulty**: Easy
 
-**Link to the Problem**: [LeetCode - Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/)
+**Link to the Problem**: [LeetCode - Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)
 
 ---
 
 ### Scenario:
-The **Longest Common Prefix Problem** requires us to find the longest common prefix string among an array of strings. If there is no common prefix, we should return an empty string.
+The **Valid Parentheses Problem** requires us to determine if a string containing only the characters `(`, `)`, `{`, `}`, `[`, and `]` is valid. A valid string must satisfy:
+1. Each opening bracket must have a corresponding closing bracket.
+2. Brackets must close in the correct order (i.e., open brackets must be closed by the most recent matching bracket).
 
 ---
 
 ### Approach:
 
-1. **Initial Check**:
-   - If the input array `strs` is empty, immediately return an empty string as there are no strings to compare.
+1. **Mapping Matching Brackets**:
+   - Use a hash map to store the matching opening bracket for each closing bracket.
 
-2. **Prefix Character-by-Character**:
-   - Start with the first string in the array as a reference.
-   - For each character in the first string, check if it is common across all strings at that position:
-     - If any string runs out of characters or has a different character at that position, stop and return the current result.
-     - Otherwise, append the character to the result and continue.
+2. **Using a Stack for Validation**:
+   - Traverse each character in the string:
+     - If it's an opening bracket, push it onto the stack.
+     - If it’s a closing bracket:
+       - Check if the stack is empty or if the top of the stack does not match the corresponding opening bracket (using the hash map). If either is true, return `false`.
+       - Otherwise, pop the stack to remove the matched opening bracket.
+   - At the end, the stack should be empty if all brackets were matched correctly.
 
 ---
 
 ### Code (C++):
 
 ```cpp
-#include <vector>
+#include <stack>
+#include <unordered_map>
 #include <string>
 
 class Solution {
 public:
-    std::string longestCommonPrefix(std::vector<std::string>& strs) {
-        if (strs.empty()) {
-            return "";  // Return empty string if no strings are provided
-        }
-        
-        std::string res = "";
-        for (int i = 0; i < strs[0].size(); i++) {
-            for (std::string s : strs) {
-                if (i == s.size() || s[i] != strs[0][i]) {
-                    return res;
+    bool isValid(std::string s) {
+        std::stack<char> stack;
+        std::unordered_map<char, char> map = {
+            {')', '('},
+            {'}', '{'},
+            {']', '['}
+        };
+
+        for (char c : s) {
+            if (map.count(c) == 0) {
+                stack.push(c);
+            } else {
+                if (stack.empty() || stack.top() != map[c]) {
+                    return false;
                 }
+                stack.pop();
             }
-            res += strs[0][i];
         }
-        
-        return res;
+        return stack.empty();
     }
 };
 ```
@@ -57,19 +65,18 @@ public:
 
 ### Explanation:
 
-- **Character-by-Character Comparison**: Start with the first string as a baseline. For each character position, check if every string matches this character:
-  - If all strings have the character at that position, add it to the result.
-  - If any string does not have the character at that position, or the characters do not match, stop and return the current result.
+- **Hash Map for Bracket Pairs**: We use a hash map to store the corresponding opening bracket for each type of closing bracket (`)`, `}`, `]`). This allows for quick lookup when we encounter a closing bracket.
+- **Stack Usage**: A stack is used to keep track of the unmatched opening brackets. When a closing bracket matches the top of the stack, we pop it off the stack, effectively marking it as matched. If a mismatch is found, or if the stack is non-empty at the end, the string is invalid.
 
 ---
 
 ### Complexity Analysis:
 
-- **Time Complexity**: O(S), where `S` is the sum of all characters in all strings.
-  - In the worst case, all strings are the same, and we check every character of each string.
+- **Time Complexity**: O(n), where `n` is the length of the string `s`.
+  - We perform a single pass through the string, with each push and pop operation on the stack taking O(1) time.
 
-- **Space Complexity**: O(1)
-  - Only a constant amount of extra space is used for the result string (excluding input storage).
+- **Space Complexity**: O(n)
+  - In the worst case, all characters could be opening brackets, requiring O(n) space for the stack.
 
 ---
 
